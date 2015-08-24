@@ -14,5 +14,12 @@ module_repo ~/bashworks
     module interactive;
 
     # https://github.com/nojhan/liquidprompt
+    export LP_USER_ALWAYS=0
+    export LP_ENABLE_BATT=0
+    export LP_ENABLE_SVN=0
+    export LP_ENABLE_HG=0
+    export LP_ENABLE_FOSSIL=0
+    export LP_ENABLE_TEMP=0
+    export LP_ENABLE_SCREEN_TITLE=1
     source ~/liquidprompt/liquidprompt;
 }

@@ -8,4 +8,4 @@ alias composer='php composer.phar'
 alias ff='ag --php'
 
 # ns -- Shortener for newscreen
-alias ns='newscreen'
+alias ns='interactive_newscreen'
