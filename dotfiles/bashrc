@@ -5,11 +5,14 @@ if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
 fi
 
-# User specific aliases and functions
+# Load my framework
 source ~/bashworks/module/source.sh
 module_repo ~/bashworks
 
+# When interactive, load the stuff I use
 [[ $- = *i* ]] && { 
     module interactive;
+
+    # https://github.com/nojhan/liquidprompt
     source ~/liquidprompt/liquidprompt;
 }
