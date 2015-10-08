@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 function interactive_load() {
+    PATH=$HOME/bin:$PATH
     source "$(module_get_path interactive)"/functions.sh
     source "$(module_get_path interactive)"/aliases.sh
 }
