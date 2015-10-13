@@ -9,3 +9,6 @@ alias ff='ag --php'
 
 # ns -- Shortener for newscreen
 alias ns='interactive_newscreen'
+
+# typo fixes
+alias jbos='jobs'
