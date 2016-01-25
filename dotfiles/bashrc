@@ -14,5 +14,5 @@ module toolbox
 
 # When interactive, load the stuff I use
 [[ $- = *i* ]] && { 
-    module interactive;
+    module interactive
 }
