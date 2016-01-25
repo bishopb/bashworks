@@ -1,8 +1,42 @@
 #!/usr/bin/env bash
 
 function vt_site() {
-    local src=${1:?What is the path to site code?}
+    local src=$1
     local dst=/opt/site
+    local alt=$(find /opt -maxdepth 1 -type d -name site.*)
+
+    # if no source is given, show the current linkages
+    if [ -z "$src" ]; then
+        if [ -L "$dst" ]; then
+            echo "$dst links to $(readlink $dst)"
+        elif [ -e "$src" ]; then
+            echo "$dst exists, but isn't a link."
+            echo "Therefore, $FUNCNAME cannot select site implementations."
+            return 0
+        fi
+
+        if [ -z "$alt" ]; then
+            echo "There are no site implementation alternatives."
+            echo "Clone into $dst/site.* to select from alternatives."
+            return 0
+        else
+            local noop="Leave as is"
+            local PS3="Alternative? "
+            echo ""
+            select dir in "$noop" $alt; do
+            case "$dir" in
+                $noop) echo "No changes made."
+                    return 0
+                    ;;
+                 *) echo ""
+                    $FUNCNAME "$dir"
+                    return $?
+                    ;;
+            esac
+            done
+        fi
+        # NOTREACHED
+    fi
 
     # ensure src is a reasonable directory
     if [ -d "$src" ]; then
@@ -24,6 +58,8 @@ function vt_site() {
             return 1
         fi
     fi
+
+    echo "Link $src to $dst"
 
     # link them up
     command ln -s "$src" "$dst" || {
