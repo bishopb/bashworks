@@ -3,7 +3,7 @@
 function vt_site() {
     local src=$1
     local dst=/opt/site
-    local alt=$(find /opt -maxdepth 1 -type d -name site.*)
+    local alt=$(find /opt -maxdepth 1 -type d -name site.* | sort)
 
     # if no source is given, show the current linkages
     if [ -z "$src" ]; then
@@ -21,13 +21,18 @@ function vt_site() {
             return 0
         else
             local noop="Leave as is"
+            local undo="Unlink"
             local PS3="Alternative? "
             echo ""
-            select dir in "$noop" $alt; do
+            select dir in "$noop" "$undo" $alt; do
             case "$dir" in
                 $noop) echo "No changes made."
                     return 0
                     ;;
+                 $undo) rm -f "$dst"
+                     echo "Unlinked"
+                     return 0
+                     ;;
                  *) echo ""
                     $FUNCNAME "$dir"
                     return $?
