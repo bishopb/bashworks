@@ -6,6 +6,28 @@ function interactive_newscreen {
     screen -t "$name" -S "$name"
 }
 
+# interactive_changescreen -- Select from a list of screens
+function interactive_changescreen {
+    if [ -n "$STY" ]; then
+        echo "Currently in screen $STY"
+    else
+        echo "Not in a screen"
+    fi
+    quit="Do not switch"
+    stys=$(ls /var/run/screen/S-$(whoami) | sort -t. -k2)
+    select sty in "$quit" $stys; do
+    case "$sty" in
+    "$quit")
+        echo "Not changes screens"
+        exit 0
+        ;;
+    *)
+        screen -DRR "$sty"
+        ;;
+    esac
+    done
+}
+
 # interactive_start_agent -- Start a new SSH agent
 function interactive_start_agent {
     echo "Initialising new SSH agent..."
