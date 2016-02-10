@@ -9,16 +9,19 @@ function interactive_newscreen {
 # interactive_changescreen -- Select from a list of screens
 function interactive_changescreen {
     if [ -n "$STY" ]; then
-        echo "Currently in screen $STY"
+        echo "Currently in screen $STY."
     else
-        echo "Not in a screen"
+        echo "Not in a screen."
     fi
-    quit="Do not switch"
-    stys=$(ls /var/run/screen/S-$(whoami) | sort -t. -k2)
+    echo
+    local quit="Do not change screens"
+    local stys=$(ls /var/run/screen/S-$(whoami) | sort -t. -k2)
+    local PS3="Screen? "
+
     select sty in "$quit" $stys; do
     case "$sty" in
     "$quit")
-        echo "Not changes screens"
+        echo "No screen change."
         return 0
         ;;
     *)
