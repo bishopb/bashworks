@@ -19,10 +19,11 @@ function interactive_changescreen {
     case "$sty" in
     "$quit")
         echo "Not changes screens"
-        exit 0
+        return 0
         ;;
     *)
         screen -DRR "$sty"
+        return $?
         ;;
     esac
     done
