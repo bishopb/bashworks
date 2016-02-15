@@ -62,3 +62,24 @@ function interactive_diceware {
        grep "^$digits\s" "$wordlist"
     done
 }
+
+# interactive_compile_ssh_config - Builds a single SSH config from source files
+# see http://serverfault.com/a/452617/204816
+function interactive_compile_ssh_config() {
+    local compiled="$HOME"/.ssh/config
+    echo "
+##############################################################################
+# 
+# Auto-generated on $(date).
+# DO NOT EDIT
+#
+##############################################################################
+
+" > "$compiled"
+
+    for config in "$HOME"/.ssh/*.config; do
+        echo "# Begin file: $config" >> "$compiled"
+        cat "$config" >> "$compiled"
+        echo "# End file: $config" >> "$compiled"
+    done
+}
