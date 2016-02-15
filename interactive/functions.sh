@@ -82,4 +82,5 @@ function interactive_compile_ssh_config() {
         cat "$config" >> "$compiled"
         echo "# End file: $config" >> "$compiled"
     done
+    chmod 600 "$compiled"
 }
