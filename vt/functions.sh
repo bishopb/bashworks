@@ -74,4 +74,5 @@ function vt_site() {
 
     # restart dependents
     sudo service httpd restart
+    sudo service php-fpm restart
 }
