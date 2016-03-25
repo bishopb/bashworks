@@ -76,3 +76,16 @@ function vt_site() {
     sudo service httpd restart
     sudo service php-fpm restart
 }
+
+function vt_add() {
+    local branch=${1:?What branch would you like to create locally (can be new)?}
+    local target="/opt/site.$1"
+    git clone git@github.com:VoiceThread/site.git "$target"
+    cd "$target"
+    git checkout -b "$1"
+}
+
+function vt_remove() {
+    local branch=${1:?What branch would you like to locally remove?}
+    sudo rm -rf /opt/site."$1"
+}
