@@ -15,3 +15,4 @@ alias xs='interactive_changescreen'
 
 # typo fixes
 alias jbos='jobs'
+alias kjobs='jobs'
