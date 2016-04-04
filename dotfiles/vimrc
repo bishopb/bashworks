@@ -4,8 +4,10 @@ set directory=~/.vim/backups/
 cmap w!! w !sudo tee > /dev/null %
 
 iabbrev pulbic public
+iabbrev pbulic public
 iabbrev fucndtion function
 iabbrev functino function
+iabbrev fucntion function
 iabbrev dfeault default
 
 let g:vim_markdown_folding_disabled=1

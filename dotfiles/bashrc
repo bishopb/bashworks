@@ -15,6 +15,4 @@ module toolbox
 # When interactive, load the stuff I use and set a compact prompt
 [[ $- = *i* ]] && { 
     module interactive vt
-    # http://superuser.com/a/201261/362931
-    export PS1='${PWD%/*}/\[\e[35;1m\]${PWD##*/}\[\e[0m\] \$ '
 }
