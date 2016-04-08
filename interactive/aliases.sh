@@ -1,6 +1,17 @@
 # jobs related
-# fj -- Find jobs matching a pattern
+# ... typo fixes
+alias  jbos='jobs'
+alias kjobs='jobs'
+alias     j='jobs'
+alias    jo='jobs'
+alias   jos='jobs'
+alias   jbs='jobs'
+alias  bojs='jobs'
+alias  objs='jobs'
+alias  josb='jobs'
+# ... fj -- Find jobs matching a pattern
 alias fj='jobs | egrep -ie'
+# ... short cuts
 alias  1='fg 1'
 alias  2='fg 2'
 alias  3='fg 3'
@@ -33,7 +44,3 @@ alias ns='interactive_newscreen'
 
 # ss -- Shortener for changescreen
 alias xs='interactive_changescreen'
-
-# typo fixes
-alias jbos='jobs'
-alias kjobs='jobs'
