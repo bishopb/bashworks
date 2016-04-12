@@ -1,1 +1,7 @@
+$include /etc/inputrc
+
+# let Shift+Tab remove the previous word, just as Tab completes next word
 "\e[Z": backward-kill-word
+
+# let tab complete work smooth over case differences
+set completion-ignore-case on
