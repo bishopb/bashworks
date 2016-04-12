@@ -12,6 +12,9 @@ function interactive_post_load() {
     export EDITOR=/usr/bin/vim
     set -o vi
 
+    # interactive shell options
+    shopt -s dirspell
+
     # start SSH agent, if it's not already running
     export SSH_ENV="$HOME"/.ssh/environment
     if [ -f "${SSH_ENV}" ]; then
