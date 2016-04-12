@@ -9,5 +9,6 @@ iabbrev fucndtion function
 iabbrev functino function
 iabbrev fucntion function
 iabbrev dfeault default
+iabbrev 4This $this
 
 let g:vim_markdown_folding_disabled=1
