@@ -8,6 +8,7 @@ iabbrev pbulic public
 iabbrev fucndtion function
 iabbrev functino function
 iabbrev fucntion function
+iabbrev ufnction function
 iabbrev dfeault default
 iabbrev 4This $this
 iabbrev retrun return
