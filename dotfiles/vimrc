@@ -1,4 +1,4 @@
-:set sw=4 ts=4 sts=4 et ai nu
+:set sw=4 ts=4 sts=4 et ai nu ic
 :set colorcolumn=78 background=dark
 set directory=~/.vim/backups/
 cmap w!! w !sudo tee > /dev/null %
