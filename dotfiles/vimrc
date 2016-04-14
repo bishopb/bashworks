@@ -1,4 +1,4 @@
-:set sw=4 ts=4 sts=4 et ai nu ic
+:set sw=4 ts=4 sts=4 et ai nu
 :set colorcolumn=78 background=dark
 set directory=~/.vim/backups/
 cmap w!! w !sudo tee > /dev/null %
@@ -14,3 +14,8 @@ iabbrev 4This $this
 iabbrev retrun return
 
 let g:vim_markdown_folding_disabled=1
+
+" case insensitive searches, without affecting substitutions
+" http://stackoverflow.com/a/35359583/2908724
+nnoremap / /\c
+nnoremap ? ?\c
