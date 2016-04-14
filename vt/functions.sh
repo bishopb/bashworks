@@ -89,3 +89,11 @@ function vt_remove() {
     local branch=${1:?What branch would you like to locally remove?}
     sudo rm -rf /opt/site."$1"
 }
+
+function vt_test_job_in_edit() {
+    local jobn=${1:?What edit job would you like to test?}
+    local file=$(jobs $jobn | awk '{print $4}')
+    if [ -e "$file" ]; then
+        ( set -x; vt test:run "$file" )
+    fi
+}
