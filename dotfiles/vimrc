@@ -16,6 +16,12 @@ iabbrev retrun return
 let g:vim_markdown_folding_disabled=1
 
 " case insensitive searches, without affecting substitutions
+" /<enter> is no longer equivalent to n
 " http://stackoverflow.com/a/35359583/2908724
 nnoremap / /\c
 nnoremap ? ?\c
+
+" save everything if terminated by interceptable signal
+" based on http://vim.1045645.n5.nabble.com/Save-all-buffers-on-SIGTERM-td5714493.html
+":autocmd VimLeave * v:dying | :write | endif
+":autocmd VimLeave * if v:dying | silent! :write | endif
