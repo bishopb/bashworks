@@ -23,5 +23,6 @@ nnoremap ? ?\c
 
 " save everything if terminated by interceptable signal
 " based on http://vim.1045645.n5.nabble.com/Save-all-buffers-on-SIGTERM-td5714493.html
+" to answer http://stackoverflow.com/questions/2760014
 ":autocmd VimLeave * v:dying | :write | endif
 ":autocmd VimLeave * if v:dying | silent! :write | endif
