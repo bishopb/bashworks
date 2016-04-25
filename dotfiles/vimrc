@@ -8,6 +8,7 @@ colorscheme vividchalk
 " editing
 set sw=4 ts=4 sts=4 et ai nu
 set colorcolumn=78
+let g:vim_markdown_folding_disabled=1
 
 " force write capability
 cmap w!! w !sudo tee > /dev/null %
@@ -29,8 +30,6 @@ iabbrev namesapce namespace
 " and give me formal spell check in various files
 " use zq to remember word, then git commit to make it permanent in the repo
 autocmd BufRead,BufNewFile README,*.md,*.php setlocal spell
-
-let g:vim_markdown_folding_disabled=1
 
 " case insensitive searches, without affecting substitutions
 " /<enter> is no longer equivalent to n
