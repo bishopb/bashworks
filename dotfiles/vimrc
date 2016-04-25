@@ -24,6 +24,7 @@ iabbrev ufnction function
 iabbrev dfeault default
 iabbrev 4This $this
 iabbrev 4this $this
+iabbrev $This $this
 iabbrev retrun return
 iabbrev namesapce namespace
 
