@@ -1,8 +1,18 @@
-:set sw=4 ts=4 sts=4 et ai nu
-:set colorcolumn=78 background=dark
+" environment
 set directory=~/.vim/backups/
+
+" colors
+set background=dark
+colorscheme vividchalk
+
+" editing
+set sw=4 ts=4 sts=4 et ai nu
+set colorcolumn=78
+
+" force write capability
 cmap w!! w !sudo tee > /dev/null %
 
+" fix up misspellings
 iabbrev pulbic public
 iabbrev pbulic public
 iabbrev fucndtion function
@@ -14,6 +24,10 @@ iabbrev dfeault default
 iabbrev 4This $this
 iabbrev 4this $this
 iabbrev retrun return
+iabbrev namesapce namespace
+
+" and give me spell check in various files
+autocmd BufRead,BufNewFile README,*.md,*.php setlocal spell
 
 let g:vim_markdown_folding_disabled=1
 
