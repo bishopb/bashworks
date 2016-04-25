@@ -12,7 +12,7 @@ set colorcolumn=78
 " force write capability
 cmap w!! w !sudo tee > /dev/null %
 
-" fix up misspellings
+" quick fix up to common misspellings
 iabbrev pulbic public
 iabbrev pbulic public
 iabbrev fucndtion function
@@ -26,7 +26,8 @@ iabbrev 4this $this
 iabbrev retrun return
 iabbrev namesapce namespace
 
-" and give me spell check in various files
+" and give me formal spell check in various files
+" use zq to remember word, then git commit to make it permanent in the repo
 autocmd BufRead,BufNewFile README,*.md,*.php setlocal spell
 
 let g:vim_markdown_folding_disabled=1
