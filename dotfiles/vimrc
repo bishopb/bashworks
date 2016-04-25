@@ -12,6 +12,7 @@ iabbrev fucntion function
 iabbrev ufnction function
 iabbrev dfeault default
 iabbrev 4This $this
+iabbrev 4this $this
 iabbrev retrun return
 
 let g:vim_markdown_folding_disabled=1
