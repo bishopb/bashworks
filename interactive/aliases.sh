@@ -1,4 +1,5 @@
 # jobs related
+alias jobs='\jobs -l | interactive_format_jobs'
 # ... typo fixes
 alias  jbos='jobs'
 alias kjobs='jobs'

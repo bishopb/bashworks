@@ -84,3 +84,38 @@ function interactive_compile_ssh_config() {
     done
     chmod 600 "$compiled"
 }
+
+# interactive_format_jobs
+# improve jobs output
+function interactive_format_jobs() {
+    local filter='{
+        if ($2 ~ /[0-9]+/) {
+            printf "%4s %5s %-9s",$1,$2,$3; $1=$2=$3=""; print $0;
+        } else {
+            printf "%4s %-9s",$1,$2; $1=$2=""; print $0;
+        }
+    }'
+    awk "$filter"
+}
+
+# interactive_hr
+# draw a line across the terminal
+# see http://wiki.bash-hackers.org/snipplets/print_horizontal_line
+function interactive_hr() {
+  local start=$'\e(0' end=$'\e(B' line='qqqqqqqqqqqqqqqq'
+  local cols=${COLUMNS:-$(tput cols)}
+  while ((${#line} < cols)); do line+="$line"; done
+  printf '%s%s%s\n' "$start" "${line:0:cols}" "$end"
+}
+
+# interactive_banner
+# places a message at the top-most line of the terminal
+function interactive_banner() {
+  local message=${1:?What message would you like in the banner?}
+  local columns=${COLUMNS:-$(tput cols)}
+  local padding=$((columns - ${#message}))
+  echo -n $'\e7\e[0;0H\e[7m'
+  echo -n $message
+  while ((padding--)); do echo -n " "; done
+  echo -n $'\e[K\e8'
+}
