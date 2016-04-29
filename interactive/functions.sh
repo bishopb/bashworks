@@ -85,17 +85,29 @@ function interactive_compile_ssh_config() {
     chmod 600 "$compiled"
 }
 
-# interactive_format_jobs
-# improve jobs output
-function interactive_format_jobs() {
-    local filter='{
+# interactive_stylize_jobs
+# stylize jobs output
+function interactive_stylize_jobs() {
+    local format='{
+        # get the jobnum and fg/bg marker
+        split(substr($1, 2), p, "]");
+
+        if (p[2] == "+") { printf "%s", CF; }
+        if (p[2] == "-") { printf "%s", CB; }
+        if (p[2] == "")  { p[2]="."; }
+
         if ($2 ~ /[0-9]+/) {
-            printf "%4s %5s %-9s",$1,$2,$3; $1=$2=$3=""; print $0;
+            printf "%2.2s%s %6s %-9s", p[1], p[2], $2 ,$3;
+            $3="";
         } else {
-            printf "%4s %-9s",$1,$2; $1=$2=""; print $0;
+            printf "%2.2s%s %-9s", p[1], p[2], $2;
         }
+        $1=$2="";
+        print $0 CO
     }'
-    awk "$filter"
+    unexpand -at35, | awk \
+        -v CB=$(color_on 1) -v CF=$(color_on 2) -v CO=$(color_off) \
+        "$format"
 }
 
 # interactive_hr

@@ -3,6 +3,7 @@
 function interactive_load() {
     export TERM=xterm-256color
     export PATH=$HOME/bin:$PATH
+    module color
     source "$(module_get_path interactive)"/variables.sh
     source "$(module_get_path interactive)"/functions.sh
     source "$(module_get_path interactive)"/aliases.sh
