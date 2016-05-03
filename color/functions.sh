@@ -32,9 +32,21 @@ function color_test_256() {
 }
 
 function color_on() {
-    echo -en "\e[38;05;${1:-3}m";
+    if [ -t 1 ]; then
+        color_force_on $1
+    fi
 }
 
 function color_off() {
+    if [ -t 1 ]; then
+        color_force_off
+    fi
+}
+
+function color_force_on() {
+    echo -en "\e[38;05;${1:-3}m";
+}
+
+function color_force_off() {
     echo -en "\e[m"
 }
