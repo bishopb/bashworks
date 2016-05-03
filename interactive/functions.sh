@@ -88,7 +88,12 @@ function interactive_compile_ssh_config() {
 # interactive_stylize_jobs
 # stylize jobs output
 function interactive_stylize_jobs() {
-    local format='{
+    if [ -t 1 ]; then
+        local CO=$(color_force_off)
+        local CB=$(color_force_on 1)
+        local CF=$(color_force_on 2)
+    fi
+    unexpand -at35, | awk -v CO="${CO:-}" -v CB="${CB:-}" -v CF="${CF:-}" '{
         # get the jobnum and fg/bg marker
         split(substr($1, 2), p, "]");
 
@@ -105,14 +110,6 @@ function interactive_stylize_jobs() {
         $1=$2="";
         print $0 CO
     }'
-    if [ -t 1 ]; then
-        CO=$(color_force_off)
-        CB=$(color_force_on 1)
-        CF=$(color_force_on 2)
-    else
-        CO=CB=CF=""
-    fi
-    unexpand -at35, | awk -v CB=$CB -v CF=$CF -v CO=$CO "$format"
 }
 
 # interactive_hr
