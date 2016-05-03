@@ -1,1 +1,5 @@
-alias column='util_column'
+alias pluck='util_pluck'
+alias sum='util_stats | pluck 1'
+alias average='util_stats | pluck 3'
+alias min='util_stats | pluck 4'
+alias max='util_stats | pluck 5'
