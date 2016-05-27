@@ -1,3 +1,6 @@
+# finding stuff
+alias ff='ag --js --json --php --yaml --xml --ignore coverage --ignore include/vendor --ignore-case'
+
 # jobs related
 alias tj='vt_test_job_in_edit'
 alias tj1='vt_test_job_in_edit 1'

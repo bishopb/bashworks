@@ -58,8 +58,8 @@ alias j19='jobs | grep "^\s*19[.+-]\s"'
 # composer -- Short cut running local composer
 alias composer='php composer.phar'
 
-# ff -- Find in PHP files
-alias ff='ag --php --ignore-case'
+# ff -- Find in files, if not already specialized
+alias ff >/dev/null 2>&1 || alias ff='ag --ignore-case'
 
 # ns -- Shortener for newscreen
 alias ns='interactive_newscreen'
