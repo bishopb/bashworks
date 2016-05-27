@@ -1,5 +1,5 @@
 # finding stuff
-alias ff='ag --js --json --php --yaml --xml --ignore coverage --ignore include/vendor --ignore-case'
+alias ff='ag --js --json --php --yaml --xml --ignore-dir=coverage --ignore-dir=include/vendor --ignore-case'
 
 # jobs related
 alias tj='vt_test_job_in_edit'
