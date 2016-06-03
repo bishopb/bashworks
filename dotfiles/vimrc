@@ -54,4 +54,4 @@ nnoremap ? ?\c
 " ... PHP: F3 to lint, F4 to run VT tests on the file, or optionally method
 " ... PHP: under cursor
 autocmd FileType php map <buffer> <F3> :!php -l "%"<CR>
-autocmd FileType php map <buffer> <F4> "zyiw:!/opt/site/vt test:run "%":<C-r>z<CR>
+autocmd FileType php map <buffer> <F4> "zyiw:!/opt/site/vt test:run -f failure "%":<C-r>z
