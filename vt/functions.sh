@@ -92,9 +92,10 @@ function vt_remove() {
 
 function vt_test_job_in_edit() {
     local jobn=${1:?What edit job would you like to test?}
+    local pattern=${2:-}
     local file=$(\jobs $jobn | awk '{print $4}')
     if [ -e "$file" ]; then
-        ( set -x; vt_clean_logs; vt test:reset; vt test:run "$file" )
+        ( set -x; vt_clean_logs; vt test:reset; vt test:run "$file":"$pattern" )
     fi
 }
 
