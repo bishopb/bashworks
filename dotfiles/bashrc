@@ -16,3 +16,6 @@ module toolbox
 [[ $- = *i* ]] && { 
     module interactive vt
 }
+
+export NVM_DIR="/home/bishop/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm

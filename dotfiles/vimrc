@@ -16,6 +16,7 @@ cmap w!! w !sudo tee > /dev/null %
 " quick fix up to common misspellings
 iabbrev pulbic public
 iabbrev pbulic public
+iabbrev pbulci public
 iabbrev Fucntion Function
 iabbrev Fucndtion Function
 iabbrev Functino Function

@@ -50,3 +50,10 @@ MySQL
 new
 CURLFile
 memoize
+params
+admin
+inode
+captcha
+orgs
+VoiceThread
+localStorage
