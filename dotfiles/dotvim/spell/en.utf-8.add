@@ -57,3 +57,5 @@ captcha
 orgs
 VoiceThread
 localStorage
+spoofable
+CSRF
