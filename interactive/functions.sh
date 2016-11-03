@@ -15,18 +15,31 @@ function interactive_changescreen {
     fi
 
     local quit="Do not change screens"
+    local new="Create new, named screen"
     local PS3="Screen? "
     if [ -n "$STY" ]; then
-        echo "Currently in screen $STY."
+        echo "Currently in screen $STY. Disconnect before changing."
+        return 0
     else
         echo "Not in a screen."
     fi
     echo
-    select sty in "$quit" $stys; do
+    select sty in "$quit" "$new" $stys; do
     case "$sty" in
     "$quit")
         echo "No screen change."
         return 0
+        ;;
+    "$new")
+        echo "Creating new screen."
+        read -p 'Screen name? ' name
+        if [ -z "$name" ]; then
+            echo 'No screen name, no screen created'
+            return 1
+        else
+            interactive_newscreen "$name"
+            return $?
+        fi
         ;;
     *)
         screen -DRR "$sty"
