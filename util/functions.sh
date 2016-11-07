@@ -50,3 +50,12 @@ function util_stats() {
       }
     '
 }
+
+# util_body -- keep the first line of output at top
+# Output is the first line followed by the command
+# @see http://unix.stackexchange.com/a/11859/50240
+function util_body() {
+    IFS= read -r header
+    printf '%s\n' "$header"
+    "$@"
+}
