@@ -40,4 +40,17 @@ function vcs_branch_exists() {
     return $?
 }
 
-
+# Merge-squash source branch into a new target branch
+# @param Source branch name
+# @param Target branch name
+function vcs_merge_squash() {
+    local src_branch=${1:-Source branch not specified}
+    local tgt_branch=${2:-Target branch not specified}
+    git checkout master
+    git fetch
+    git pull origin master
+    git checkout -b "$tgt_branch"
+    git merge --squash "$src_branch"
+    git commit -am "Merge/squash $src_branch into $tgt_branch"
+    git push origin "$tgt_branch"
+}
