@@ -106,3 +106,17 @@ function vt_clean_logs() {
         /debug/rollback_warnings /debug/trace.out
     sudo rm -f /debug/apache_coredumps/* /debug/failed/* /debug/notification/*
 }
+
+function vt_reset_web_services() {
+    sudo service php-fpm restart
+    sudo service httpd restart
+}
+
+function vt_link_client_to_site() {
+    local from=${1:?/opt/clients}
+    local to=${2:?/opt/site}
+    sudo rsync -vaz $from/browser/src/web/build/manager/ $to/app/manager
+    sudo ln -sf $from/browser/src/web/build/manager/js/build.js $to/app/manager/js/
+    vt_reset_web_services
+    ls -l $to/app/manager/locale/en_US/* $to/app/manager/js/
+}
