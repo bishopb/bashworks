@@ -10,7 +10,7 @@ function interactive_load() {
 }
 
 function interactive_post_load() {
-    # The One True Editor
+    # Ensure The One True Editor
     export EDITOR=/usr/bin/vim
     set -o vi
 
@@ -27,4 +27,7 @@ function interactive_post_load() {
     else
         interactive_start_agent
     fi
+
+    # run NVM
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 }
