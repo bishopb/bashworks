@@ -44,8 +44,8 @@ function vcs_branch_exists() {
 # @param Source branch name
 # @param Target branch name
 function vcs_merge_squash() {
-    local src_branch=${1:-Source branch not specified}
-    local tgt_branch=${2:-Target branch not specified}
+    local src_branch=${1:?Source branch not specified}
+    local tgt_branch=${2:?Target branch not specified}
     git checkout master
     git fetch
     git pull origin master
