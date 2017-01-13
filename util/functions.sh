@@ -67,3 +67,9 @@ function util_cdup() {
     printf -v path '%*s' "${1:-1}"
     cd "${path// /../}"
 }
+
+# util_sponge -- Soak up stdin until EOF, then dump it
+# @see http://unix.stackexchange.com/a/337061/50240
+function util_sponge() {
+    awk '{a[NR] = $0} END {for (i = 1; i <= NR; i++) print a[i]}'
+}
