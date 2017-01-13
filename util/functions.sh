@@ -59,3 +59,11 @@ function util_body() {
     printf '%s\n' "$header"
     "$@"
 }
+
+# util_cdup -- go up N number of directories
+# @see http://stackoverflow.com/q/41636778/2908724
+function util_cdup() {
+    # $1=number of times, defaults to 1
+    printf -v path '%*s' "${1:-1}"
+    cd "${path// /../}"
+}
