@@ -120,3 +120,19 @@ function vt_link_client_to_site() {
     vt_reset_web_services
     ls -l $to/app/manager/locale/en_US/* $to/app/manager/js/
 }
+
+function vt_merge_squash() {
+    local src_branch=${1:?Source branch not specified}
+    if [[ $src_branch != origin/* ]]; then
+        src_branch="origin/$src_branch"
+        echo "Rewrote source branch: $src_branch" >&2
+    fi
+    local tgt_branch=${2:?Target branch not specified}
+    target=$(mktemp -d)
+    git clone git@github.com:VoiceThread/site.git "$target"
+    cd "$target"
+    source "$HOME"/bashworks/vcs/git.sh
+    vcs_merge_squash "$src_branch" "$tgt_branch"
+    cd -
+    rm -rf "$target"
+}
