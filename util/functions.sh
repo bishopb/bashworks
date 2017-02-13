@@ -73,3 +73,14 @@ function util_cdup() {
 function util_sponge() {
     awk '{a[NR] = $0} END {for (i = 1; i <= NR; i++) print a[i]}'
 }
+
+# = -- General purpose calculator
+# @see http://stackoverflow.com/a/19251899/2908724
+# @see http://stackoverflow.com/a/29581452/2908724
+# $ = 1+sin[3.14159] + log[1.5] - atan2[1,2] - 1e5 + 3e-10
+# > 0.94182
+function = ()
+{
+    local in="$(echo "$@" | sed -e 's/\[/(/g' -e 's/\]/)/g')";
+    awk 'BEGIN {print '"$in"'}' < /dev/null
+}
