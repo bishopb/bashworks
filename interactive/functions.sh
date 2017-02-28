@@ -8,22 +8,16 @@ function interactive_newscreen {
 
 # interactive_changescreen -- Select from a list of screens
 function interactive_changescreen {
-    local stys=$(ls /var/run/screen/S-$(whoami) 2>/dev/null | sort -t. -k2)
-    if [ -z "$stys" ]; then
-        echo "No screens started."
-        return;
-    fi
-
-    local quit="Do not change screens"
-    local new="Create new, named screen"
-    local PS3="Screen? "
     if [ -n "$STY" ]; then
         echo "Currently in screen $STY. Disconnect before changing."
-        return 0
-    else
-        echo "Not in a screen."
+        return 1
     fi
-    echo
+
+    local stys=$(ls /var/run/screen/S-$(whoami) 2>/dev/null | sort -t. -k2)
+    local quit="Exit without changing screens"
+    local new="Create new, named screen"
+    local PS3="Screen? "
+
     select sty in "$quit" "$new" $stys; do
     case "$sty" in
     "$quit")
