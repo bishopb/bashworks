@@ -19,3 +19,10 @@ for src in "${HOME}"/bashworks/dotfiles/*; do
         command ln -s "${src}" "${tgt}"
     fi
 done
+
+# create top-level organization
+mkdir -p "${HOME}"/{bin,etc/{,dictionaries}}
+
+# install add-ons
+curl -sS -o "${HOME}"/etc/dictionaries/enable1.txt \
+    https://raw.githubusercontent.com/dolph/dictionary/master/enable1.txt
