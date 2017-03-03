@@ -24,5 +24,20 @@ done
 mkdir -p "${HOME}"/{bin,etc/{,dictionaries},tmp}
 
 # install add-ons
-curl -sS -o "${HOME}"/etc/dictionaries/enable1.txt \
-    https://raw.githubusercontent.com/dolph/dictionary/master/enable1.txt
+function install_enable_dictionary() {
+    local target="${HOME}"/etc/dictionaries/enable1.txt
+    local source="https://raw.githubusercontent.com/dolph/dictionary/master/enable1.txt"
+    [ -e "$target" ] && return 0
+    curl -sS -o "$target" "$source"
+}
+function install_the_silver_searcher() {
+    $(which ag >/dev/null 2>&1) && return 0
+	sudo yum install -y pcre-devel xz-devel
+	cd /usr/local/src
+	sudo git clone https://github.com/ggreer/the_silver_searcher.git
+	cd the_silver_searcher
+	sudo ./build.sh
+	sudo make install
+}
+install_enable_dictionary
+install_the_silver_searcher
