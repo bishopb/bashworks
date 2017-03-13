@@ -79,8 +79,43 @@ function util_sponge() {
 # @see http://stackoverflow.com/a/29581452/2908724
 # $ = 1+sin[3.14159] + log[1.5] - atan2[1,2] - 1e5 + 3e-10
 # > 0.94182
-function = ()
-{
+function =() {
     local in="$(echo "$@" | sed -e 's/\[/(/g' -e 's/\]/)/g')";
     awk 'BEGIN {print '"$in"'}' < /dev/null
+}
+
+# util_backoff -- Retry a command a command until it succeeds, limiting the
+# maximum number of times it can run and backing off after each failed
+# attempt.
+# ATTEMPTS=99 TIMEOUT=2 util_backoff curl 'http://example.co'
+# @see http://stackoverflow.com/a/8351489/2908724
+function util_backoff() {
+    local -i max_attempts=${ATTEMPTS-5}
+    local -i timeout=${TIMEOUT-1}
+    local -i attempt=0
+    local -i exitCode=0
+
+    if [ $timeout -lt 0 ]; then
+        timeout=1
+    elif [ $max_attempts -lt 1 ]; then
+        max_attempts=1
+    fi
+
+    while (( $attempt < $max_attempts )); do
+        attempt=$(( attempt + 1 ))
+
+		"$@"
+		exitCode=$?
+
+		if [ $exitCode -eq 0 ]; then
+			return 0
+        elif [ $attempt -eq $max_attempts ]; then
+            echo "Exited with $exitCode. Giving up." >&2
+            return $exitCode
+        else
+            echo "Exited with $exitCode. Retrying after $timeout seconds." >&2
+            sleep $timeout
+            timeout=$(( timeout * 2 ))
+		fi
+    done
 }
