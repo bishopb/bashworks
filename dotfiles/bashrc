@@ -6,13 +6,4 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # Load my framework
-source ~/bashworks/module/source.sh
-module_repo ~/bashworks
-
-# Load common tools
-module toolbox
-
-# When interactive, load the stuff I use and set a compact prompt
-[[ $- = *i* ]] && { 
-    module interactive vt
-}
+source ~/bashworks/bootstrap.sh
