@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
 function fun_load() {
-    source "$(module_get_path util)"/functions.sh
-    source "$(module_get_path util)"/aliases.sh
+    source "$(module_get_path fun)"/functions.sh
+    source "$(module_get_path fun)"/aliases.sh
 }
