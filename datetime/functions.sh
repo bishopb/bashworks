@@ -25,7 +25,7 @@ function datetime_calendar() {
     printf "%$(((dNbA-1)*3))s"
     dNbW=$dNbA
     dNbM=1
-    while ((dNbM <= days)) ;do
+    while :; do
         if (( today[Y]==ref[Y] &&  
               today[m]==ref[m] && 
               today[d]==dNbM )) ;then
@@ -33,8 +33,12 @@ function datetime_calendar() {
         else
             printf "%2d " "$dNbM"
         fi
-        ((dNbM++))
-        if ((dNbW  >=7)) ;then
+        if (( dNbM < days )); then
+          ((dNbM++))
+        elif (( dNbM = days )); then
+          break
+        fi
+        if ((dNbW >=7)) ;then
             cdate=$((10#$(date -d "$(date +${ref[Y]}-${ref[m]}-$dNbM)" +'%V')))
             printf "\n%2d  " "$cdate"
             dNbW=0
