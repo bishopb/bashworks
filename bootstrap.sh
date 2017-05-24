@@ -5,7 +5,7 @@ module_repo ~/bashworks
 # Load common tools
 module toolbox
 
-# When interactive, load the stuff I use and set a compact prompt
+# When interactive, load the stuff I use
 [[ $- = *i* ]] && { 
     module interactive vt
 }
