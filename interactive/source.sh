@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
 function interactive_load() {
-    export TERM=${TERM:-xterm-256color}
-    export PATH="${HOME}"/bin:"${PATH}"
-    module color util datetime
+    [ -d "${HOME}"/bin ] && export PATH="${HOME}"/bin:"${PATH}"
+
+    module terminal color util datetime
+
     source "$(module_get_path interactive)"/variables.sh
     source "$(module_get_path interactive)"/functions.sh
     source "$(module_get_path interactive)"/aliases.sh
