@@ -8,7 +8,7 @@ function fun_check_spinid() {
     local pass=${2:?Missing password}
     local cookiejar
     cookiejar=$(mktemp)
-    curl -ss 'https://www.wheeloffortune.com/account/Login' \
+    curl -sSk 'https://www.wheeloffortune.com/account/Login' \
         -H 'origin: http://www.wheeloffortune.com' \
         -H 'accept-encoding: gzip, deflate, br' \
         -H 'accept-language: en-US,en;q=0.8' \
@@ -24,7 +24,7 @@ function fun_check_spinid() {
         -c "$cookiejar" \
         --compressed -o /dev/null
 
-    curl -sS 'https://www.wheeloffortune.com/Widget/SpinTestModal' \
+    curl -sSk 'https://www.wheeloffortune.com/Widget/SpinTestModal' \
         -H 'pragma: no-cache' \
         -H 'accept-encoding: gzip, deflate, sdch, br' \
         -H 'x-requested-with: XMLHttpRequest' \
