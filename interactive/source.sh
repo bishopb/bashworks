@@ -31,4 +31,7 @@ function interactive_post_load() {
 
     # run NVM, if present
     [ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh"
+
+    # situation display
+    [ -z "${DISPLAY+x}" ] || echo "Display set to ${DISPLAY}"
 }
