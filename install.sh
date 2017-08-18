@@ -73,4 +73,4 @@ function install_ripgrep() {
     command sudo yum install -y ripgrep
 }
 install_enable_dictionary
-install_the_silver_searcher
+install_ripgrep
