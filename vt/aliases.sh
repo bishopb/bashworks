@@ -1,5 +1,5 @@
 # finding stuff
-alias ff='rg -t js -t json -t php -t md -t yaml -t xml -t twig -t README -g !coverage -g !include/vendor -g !node_modules -i'
+alias ff='rg -t js -t json -t php -t md -t yaml -t xml -t twig -t readme -g !coverage -g !include/vendor -g !node_modules -i'
 
 # jobs related
 alias tj='vt_test_job_in_edit'
