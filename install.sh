@@ -7,23 +7,23 @@ set +x
 # setup GitHub access
 function setup_github_access() {
     local keyfile="${HOME}/.ssh/id_rsa.bishopb.github"
-    if [ ! -f "$keyfile" ]; then
-        echo 'Missing GitHub key' >&2
-        exit 1
+    if [ ! -f "${keyfile}" ]; then
+        echo 'Personal GitHub key missing: using a stub.' >&2
+        command touch "${keyfile}"
     fi
-    if ! $(grep -q 'Host bishopb.github.com' "${HOME}/.ssh/config"); then
+    if ! $(command grep -q 'Host bishopb.github.com' "${HOME}/.ssh/config"); then
         cat >> "${HOME}/.ssh/config" <<EOCONFIG
 Host bishopb.github.com
     HostName github.com
     User git
     IdentitiesOnly yes
-    IdentityFile $keyfile
+    IdentityFile ${keyfile}
 EOCONFIG
     fi
 }
 setup_github_access
 
-# install the framework if not present
+# install the framework, if we just downloaded the installer
 function install_framework() {
     if [ ! -d "${HOME}"/bashworks ]; then
         command git clone https://github.com/bishopb/bashworks.git "${HOME}"/bashworks
@@ -56,7 +56,7 @@ function install_enable_dictionary() {
     local target="${HOME}"/etc/dictionaries/enable1.txt
     local source="https://raw.githubusercontent.com/dolph/dictionary/master/enable1.txt"
     [ -e "$target" ] && return 0
-    command -sS -o "$target" "$source"
+    command curl -sS -o "$target" "$source"
 }
 function install_the_silver_searcher() {
     $(which ag >/dev/null 2>&1) && return 0
