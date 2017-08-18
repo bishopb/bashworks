@@ -67,5 +67,10 @@ function install_the_silver_searcher() {
 	command sudo ./build.sh
 	command sudo make install
 }
+function install_ripgrep() {
+    $(which rg >/dev/null 2>&1) && return 0
+	command sudo yum-config-manager --add-repo=https://copr.fedorainfracloud.org/coprs/carlwgeorge/ripgrep/repo/epel-7/carlwgeorge-ripgrep-epel-7.repo
+    command sudo yum install -y ripgrep
+}
 install_enable_dictionary
 install_the_silver_searcher
