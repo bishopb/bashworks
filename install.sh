@@ -36,7 +36,7 @@ function link_dotfiles() {
     for src in "${HOME}"/bashworks/dotfiles/*; do
         tgt="${HOME}/.${src##*/}"
         if [ -e "${tgt}" ]; then
-            command rm --interactive "${tgt}"
+            command mv "${tgt}" "${tgt}.backup"
         fi
         if [ ! -e "${tgt}" ]; then
             command ln -s "${src}" "${tgt}"
