@@ -7,6 +7,7 @@ function vt_load() {
 }
 
 function vt_post_load() {
+    # setup AWS
     [ -d "${HOME}"/.aws ] || {
         echo "Creating AWS configuration directory" >&2
         mkdir "${HOME}"/.aws;
@@ -27,4 +28,9 @@ function vt_post_load() {
         echo "aws_secret_access_key = " >> "${HOME}"/.aws/credentials;
     }
     export AWS_PROFILE=bishop
+
+    # setup GIT
+	git config --global user.name 'Bishop Bettini'
+	git config --global user.email 'bishop.bettini@gmail.com'
+	git config --global core.editor 'vim'
 }
