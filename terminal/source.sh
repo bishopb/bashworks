@@ -11,7 +11,7 @@ function terminal_load() {
 
     # upgrade to 256 colors if available
     case "${TERM}" in
-    xterm|putty|rxvt|Eterm|konsole|gnome)
+    xterm|putty|rxvt|Eterm|konsole|gnome|screen)
         infocmp "${TERM}-256color" >/dev/null
         if [ $? -eq 0 ]; then
             TERM="${TERM}-256color"
