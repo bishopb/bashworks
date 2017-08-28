@@ -33,4 +33,5 @@ function vt_post_load() {
 	git config --global user.name 'Bishop Bettini'
 	git config --global user.email 'bishop.bettini@gmail.com'
 	git config --global core.editor 'vim'
+    git config --global push.default simple
 }
