@@ -20,6 +20,8 @@ Host bishopb.github.com
     IdentityFile ${keyfile}
 EOCONFIG
     fi
+    chown "${USER}" "${HOME}"/.ssh/config
+    chmod 644 "${HOME}"/.ssh/config
 }
 setup_github_access
 
@@ -74,3 +76,5 @@ function install_ripgrep() {
 }
 install_enable_dictionary
 install_ripgrep
+
+source "${HOME}"/.bashrc
