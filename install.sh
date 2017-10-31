@@ -1,11 +1,26 @@
 # file: install.sh
 # Installs the bashworks framework, linking up the on-board dotfiles and
 # arranging the environment
+
 set -e
 set +x
 
+[ -d "${HOME}"/bashworks ] || command mkdir -p "${HOME}"/bashworks
+
+# nice little helper
+function run() {
+    local tmpfile rc
+    tmpfile=$(mktemp)
+    "${@}" &>>"${tmpfile}" && rc=$? || rc=$?
+    { echo "[$(date)] ${rc} ${@}"; cat "${tmpfile}"; } >> "${HOME}"/bashworks/install.log
+    rm -f "${tmpfile}"
+}
+
 # setup GitHub access
 function setup_github_access() {
+    [ -d "${HOME}/.ssh" ] || mkdir "${HOME}/.ssh"
+    [ -e "${HOME}/.ssh/config" ] || touch "${HOME}/.ssh/config"
+
     local keyfile="${HOME}/.ssh/id_rsa.bishopb.github"
     if [ ! -f "${keyfile}" ]; then
         echo 'Personal GitHub key missing: using a stub.' >&2
@@ -20,10 +35,10 @@ Host bishopb.github.com
     IdentityFile ${keyfile}
 EOCONFIG
     fi
-    chown "${USER}" "${HOME}"/.ssh/config
-    chmod 644 "${HOME}"/.ssh/config
+    command chown "${USER}" "${HOME}"/.ssh/config
+    command chmod 644 "${HOME}"/.ssh/config
 }
-setup_github_access
+run setup_github_access
 
 # install the framework, if we just downloaded the installer
 function install_framework() {
@@ -31,7 +46,7 @@ function install_framework() {
         command git clone https://github.com/bishopb/bashworks.git "${HOME}"/bashworks
     fi
 }
-install_framework
+run install_framework
 
 # link the dotfiles
 function link_dotfiles() {
@@ -45,13 +60,13 @@ function link_dotfiles() {
         fi
     done
 }
-link_dotfiles
+run link_dotfiles
 
 # create top-level organization
 function create_directories() {
     command mkdir -p "${HOME}"/{bin,etc/{,dictionaries},tmp}
 }
-create_directories
+run create_directories || true
 
 # install add-ons
 function install_enable_dictionary() {
@@ -60,21 +75,12 @@ function install_enable_dictionary() {
     [ -e "$target" ] && return 0
     command curl -sS -o "$target" "$source"
 }
-function install_the_silver_searcher() {
-    $(which ag >/dev/null 2>&1) && return 0
-	command sudo yum install -y pcre-devel xz-devel
-	command cd /usr/local/src
-	command sudo git clone https://github.com/ggreer/the_silver_searcher.git
-	command cd the_silver_searcher
-	command sudo ./build.sh
-	command sudo make install
-}
 function install_ripgrep() {
     $(which rg >/dev/null 2>&1) && return 0
-	command sudo yum-config-manager --add-repo=https://copr.fedorainfracloud.org/coprs/carlwgeorge/ripgrep/repo/epel-7/carlwgeorge-ripgrep-epel-7.repo
+    command sudo yum-config-manager --add-repo=https://copr.fedorainfracloud.org/coprs/carlwgeorge/ripgrep/repo/epel-7/carlwgeorge-ripgrep-epel-7.repo
     command sudo yum install -y ripgrep
 }
-install_enable_dictionary
-install_ripgrep
+{ run install_enable_dictionary; run install_ripgrep; } &
 
-source "${HOME}"/.bashrc
+# re-run the bash rc to catch up this particular session
+[ -d "${HOME}/.bashrc" ] && source "${HOME}/.bashrc"
