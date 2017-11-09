@@ -45,8 +45,13 @@ function util_stats() {
         } else {
           median = ( a[c/2] + a[c/2-1] ) / 2;
         }
-        OFS="\t";
-        print sum, c, ave, median, a[0], a[c-1];
+        OFS="";
+        print "sum=",sum;
+        print "count=",c;
+        print "average=",ave;
+        print "median=",median;
+        print "q1=",a[0];
+        print "q4=",a[c-1];
       }
     '
 }
