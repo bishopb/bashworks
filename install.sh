@@ -5,14 +5,14 @@
 set -e
 set +x
 
-[ -d "${HOME}"/bashworks ] || command mkdir -p "${HOME}"/bashworks
+[ -d "${HOME}"/tmp ] || command mkdir -p "${HOME}"/tmp
 
 # nice little helper
 function run() {
     local tmpfile rc
     tmpfile=$(mktemp)
     "${@}" &>>"${tmpfile}" && rc=$? || rc=$?
-    { echo "[$(date)] ${rc} ${@}"; cat "${tmpfile}"; } >> "${HOME}"/bashworks/install.log
+    { echo "[$(date)] ${rc} ${@}"; cat "${tmpfile}"; } >> "${HOME}"/tmp/bashworks.install.log
     rm -f "${tmpfile}"
 }
 
