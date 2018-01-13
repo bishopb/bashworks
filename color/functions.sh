@@ -84,7 +84,7 @@ color_force_off() {
 
 # strip ANSI color codes
 color_strip() {
-	sed -e 's,\[[0-9;]*[m|K],,g' -e 's,\\033,,g'
+	sed -e 's,\[[0-9;]*[m|K],,g' -e 's,\\033,,g' -e 's,\\\[,,g' -e 's,\\],,g'
 }
 
 # replace color mark-up with corresponding ANSI codes
