@@ -127,10 +127,11 @@ function interactive_stylize_jobs() {
 # draw a line across the terminal
 # see http://wiki.bash-hackers.org/snipplets/print_horizontal_line
 function interactive_hr() {
-  local start=$'\e(0' end=$'\e(B' line='qqqqqqqqqqqqqqqq'
-  local cols=${COLUMNS:-$(tput cols)}
+  local line='━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+  local line='┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄'
+  local cols=${1:-${COLUMNS:-$(tput cols)}}
   while ((${#line} < cols)); do line+="$line"; done
-  printf '%s%s%s\n' "$start" "${line:0:cols}" "$end"
+  printf "${line:0:cols}"
 }
 
 # interactive_banner
@@ -143,4 +144,53 @@ function interactive_banner() {
   echo -n $message
   while ((padding--)); do echo -n " "; done
   echo -n $'\e[K\e8'
+}
+
+# set the terminal title, if possible
+# https://stackoverflow.com/a/1687708/2908724
+function interactive_title() {
+  local title=${1:?What would you like in the title?}
+  echo -e "\033]2;$title\007"
+}
+
+# draw a line-surrounded header, with a message offset in the middle, like:
+# ---[message goes here]--------------------------------------------------
+function interactive_header() {
+  local message=${1:?What message would you like in the banner?}
+  local stripped=$(color_strip <<< "${message}")
+  local columns=${COLUMNS:-$(tput cols)}
+  local padding=$((columns - ${#stripped}))
+  color_on ${2:-250}
+  interactive_hr 2
+  color_off
+  printf '[%b]' "${message}"
+  color_on ${2:-250}
+  interactive_hr $((padding - 4)) # the leading 2 '-', plus the 2 '[]' characters
+  color_off
+  echo
+}
+
+function interactive_prompt_command() {
+  rc=$?
+  local fg bg
+  [ 0 -eq ${rc} ] && { fg=0; bg=2; } || { fg=7; bg=1; }
+
+  # last result
+  prompt="<fg=${fg}><bg=${bg}> ${rc} </>]┄┄["
+
+  # time and place
+  prompt+="<fg=126>$(date +%T)</>  "
+  prompt+="<fg=75>${USER:-?}</>@<fg=70>$(hostname)</>:<fg=178>${PWD:-?}</>"
+
+  # git-ish
+  local branch
+  branch=$(git branch -a 2>/dev/null| grep '^*' | cut -c3-) || true;
+  [ -n "${branch}" ] && prompt+="  <fg=204>(${branch})</>"
+
+  # drop to the bottom, break a line width, draw the header
+  tput cup 9999 0
+  echo
+  interactive_header "$(color_markup <<< "${prompt}")"
+
+  return $rc
 }
