@@ -1,6 +1,5 @@
 # http://superuser.com/a/201261/362931
-export PS1='\!\$ '
-export PROMPT_COMMAND=interactive_prompt_command
+export PS1='${PWD%/*}/\[\e[33;1m\]${PWD##*/}\[\e[0m\] \$ '
 
 export TZ='EST5EDT'
 
