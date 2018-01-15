@@ -88,4 +88,4 @@ run create_directories || true
 { run install_enable_dictionary; run install_ripgrep; } &
 
 # re-run the bash rc to catch up this particular session
-[ -d "${HOME}/.bashrc" ] && source "${HOME}/.bashrc"
+[ -d "${HOME}"/.bashrc ] && source "${HOME}"/.bashrc
