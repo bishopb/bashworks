@@ -1,5 +1,5 @@
 # http://superuser.com/a/201261/362931
-export PS1='${PWD%/*}/\[\e[33;1m\]${PWD##*/}\[\e[0m\] \$ '
+export PS1='${PWD%/*}/\[\033[38;5;207m\]${PWD##*/}\[\e[0m\] \$ '
 
 export TZ='EST5EDT'
 
