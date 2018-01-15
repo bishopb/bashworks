@@ -1,3 +1,5 @@
+alias vt='/opt/site/vt'
+
 # finding stuff
 alias ff='rg -t js -t json -t php -t md -t yaml -t xml -t twig -t readme -g !coverage -g !include/vendor -g !node_modules -i'
 

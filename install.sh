@@ -5,12 +5,13 @@
 set -e
 set +x
 
+# ensure we have a private temporary space (for logs and various workings)
 [ -d "${HOME}"/tmp ] || command mkdir -p "${HOME}"/tmp
 
 # nice little helper
 function run() {
     local tmpfile rc
-    tmpfile=$(mktemp)
+    tmpfile="$(mktemp)"
     "${@}" &>>"${tmpfile}" && rc=$? || rc=$?
     { echo "[$(date)] ${rc} ${@}"; cat "${tmpfile}"; } >> "${HOME}"/tmp/bashworks.install.log
     rm -f "${tmpfile}"
@@ -18,10 +19,10 @@ function run() {
 
 # setup GitHub access
 function setup_github_access() {
-    [ -d "${HOME}/.ssh" ] || mkdir "${HOME}/.ssh"
-    [ -e "${HOME}/.ssh/config" ] || touch "${HOME}/.ssh/config"
+    [ -d "${HOME}"/.ssh ] || mkdir "${HOME}"/.ssh
+    [ -e "${HOME}"/.ssh/config ] || touch "${HOME}"/.ssh/config
 
-    local keyfile="${HOME}/.ssh/id_rsa.bishopb.github"
+    local keyfile="${HOME}"/.ssh/id_rsa.bishopb.github
     if [ ! -f "${keyfile}" ]; then
         echo 'Personal GitHub key missing: using a stub.' >&2
         command touch "${keyfile}"
@@ -36,17 +37,17 @@ Host bishopb.github.com
 EOCONFIG
     fi
     command chown "${USER}" "${HOME}"/.ssh/config
-    command chmod 644 "${HOME}"/.ssh/config
+    command chmod 600 "${HOME}"/.ssh/config
 }
-run setup_github_access
 
 # install the framework, if we just downloaded the installer
 function install_framework() {
-    if [ ! -d "${HOME}"/bashworks ]; then
+    if [ -d "${HOME}"/bashworks ]; then
+        (cd "${HOME}"/bashworks && git pull origin master)
+    else
         command git clone https://github.com/bishopb/bashworks.git "${HOME}"/bashworks
     fi
 }
-run install_framework
 
 # link the dotfiles
 function link_dotfiles() {
@@ -60,13 +61,11 @@ function link_dotfiles() {
         fi
     done
 }
-run link_dotfiles
 
 # create top-level organization
 function create_directories() {
     command mkdir -p "${HOME}"/{bin,etc/{,dictionaries},tmp}
 }
-run create_directories || true
 
 # install add-ons
 function install_enable_dictionary() {
@@ -80,6 +79,12 @@ function install_ripgrep() {
     command sudo yum-config-manager --add-repo=https://copr.fedorainfracloud.org/coprs/carlwgeorge/ripgrep/repo/epel-7/carlwgeorge-ripgrep-epel-7.repo
     command sudo yum install -y ripgrep
 }
+
+# run the setup
+run setup_github_access
+run install_framework
+run link_dotfiles
+run create_directories || true
 { run install_enable_dictionary; run install_ripgrep; } &
 
 # re-run the bash rc to catch up this particular session
