@@ -176,27 +176,21 @@ function interactive_prompt_command() {
   [ 0 -eq ${rc} ] && { fg=0; bg=2; } || { fg=7; bg=1; }
 
   # last result
-  prompt="[\[<fg=${fg}>\]\[<bg=${bg}>\] ${rc} \[</>\]] "
+  prompt="<fg=${fg}><bg=${bg}> ${rc} </>]┄┄["
 
   # time and place
-  prompt+='\[<fg=126>\]$(date +%T)\[</>\]  '
-  prompt+='\[<fg=75>\]${USER:-?}\[</>\]@\[<fg=70>\]$(hostname)\[</>\]:\[<fg=178>\]${PWD:-?}\[</>\]'
+  prompt+="<fg=126>$(date +%T)</>  "
+  prompt+="<fg=75>${USER:-?}</>@<fg=70>$(hostname)</>:<fg=178>${PWD:-?}</>"
 
   # git-ish
   local branch
   branch=$(git branch -a 2>/dev/null| grep '^*' | cut -c3-) || true;
-  [ -n "${branch}" ] && prompt+="\[<fg=204>\]<${branch}>\[</>\]"
-
-  # screen
-  local screen
-  screen=$(pstree --show-parents -p $$ | head -n 1 | sed 's/\(.*\)+.*/\1/' | grep screen | wc -l) || true
-  [ "1" = "${screen}" ] && prompt+="  \[<fg=93>\]screen\[</>\]"
+  [ -n "${branch}" ] && prompt+="  <fg=204>(${branch})</>"
 
   # drop to the bottom, break a line width, draw the header
   tput cup 9999 0
-  PS1='\n'
-  PS1+="$(printf '%b' "$(color_markup <<< "${prompt}")")"
-  PS1+='\n\!\$ '
+  echo
+  interactive_header "$(color_markup <<< "${prompt}")"
 
   return $rc
 }
