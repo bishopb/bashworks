@@ -173,7 +173,7 @@ function interactive_header() {
 function interactive_prompt_command() {
   rc=$?
   local fg bg
-  [ 0 -eq ${rc} ] && { fg=0; bg=2; } || { fg=7; bg=1; }
+  [ 0 -eq ${rc} ] && { fg=2; bg=0; } || { fg=7; bg=1; }
 
   # last result
   prompt="<fg=${fg}><bg=${bg}> ${rc} </>]┄┄["
